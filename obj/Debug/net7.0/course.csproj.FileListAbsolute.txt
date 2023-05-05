@@ -1,0 +1,15 @@
+/home/kirill/prog/university/2sem/course/bin/Debug/net7.0/course
+/home/kirill/prog/university/2sem/course/bin/Debug/net7.0/course.deps.json
+/home/kirill/prog/university/2sem/course/bin/Debug/net7.0/course.runtimeconfig.json
+/home/kirill/prog/university/2sem/course/bin/Debug/net7.0/course.dll
+/home/kirill/prog/university/2sem/course/bin/Debug/net7.0/course.pdb
+/home/kirill/prog/university/2sem/course/obj/Debug/net7.0/course.csproj.AssemblyReference.cache
+/home/kirill/prog/university/2sem/course/obj/Debug/net7.0/course.GeneratedMSBuildEditorConfig.editorconfig
+/home/kirill/prog/university/2sem/course/obj/Debug/net7.0/course.AssemblyInfoInputs.cache
+/home/kirill/prog/university/2sem/course/obj/Debug/net7.0/course.AssemblyInfo.cs
+/home/kirill/prog/university/2sem/course/obj/Debug/net7.0/course.csproj.CoreCompileInputs.cache
+/home/kirill/prog/university/2sem/course/obj/Debug/net7.0/course.dll
+/home/kirill/prog/university/2sem/course/obj/Debug/net7.0/refint/course.dll
+/home/kirill/prog/university/2sem/course/obj/Debug/net7.0/course.pdb
+/home/kirill/prog/university/2sem/course/obj/Debug/net7.0/course.genruntimeconfig.cache
+/home/kirill/prog/university/2sem/course/obj/Debug/net7.0/ref/course.dll

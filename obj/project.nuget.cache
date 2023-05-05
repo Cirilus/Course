@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "ouJ0OCjc0PI4QDKIwPjC+jKkKEUgu/DzDKcjaD9sx76l753ShxruAeN5ej+c8QSwv7ith6PAyXJrkAnA9h5+8g==",
+  "success": true,
+  "projectFilePath": "/home/kirill/prog/university/2sem/course/course.csproj",
+  "expectedPackageFiles": [
+    "/home/kirill/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.3/microsoft.aspnetcore.app.ref.7.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
