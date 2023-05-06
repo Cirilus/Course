@@ -21,7 +21,6 @@ while (true){
 			if (cred == ""){
 				System.Console.WriteLine("\nThe error credentials\n");
 			} else{
-
 				username = cred;
 				auth = true;
 			}
@@ -47,7 +46,7 @@ while (true){
 System.Console.WriteLine("\n");
 
 while (true){
-	System.Console.WriteLine("\n1 - list of all crowds\n2 - create the crowd \n3 - exit");
+	System.Console.WriteLine("\n1 - list of all crowds\n2 - create the crowd\n3 - go to the admin panel of crowd\n4 - exit");
 	System.Console.Write("your choice " + username + " :");
 	choice = Utils.saveEnter();
 	if (choice == -1){
@@ -56,6 +55,10 @@ while (true){
 	switch (choice){
 		case 1:
 			List<string[]> crowds = Crowd.crowds();
+			if (crowds.Count <= 0){
+				System.Console.WriteLine("\n There are no avaliable crowds, create it first\n");
+				break;
+			}
 			System.Console.WriteLine("	name		location    length of crowd");
 			for (int i = 0; i < crowds.Count; ++i){
 				Console.WriteLine(i + ". " + "|{0,15:s}|{1,15:s}| {2,16:s}|", crowds[i][0], crowds[i][1], crowds[i][2]);
@@ -64,13 +67,41 @@ while (true){
 			if (index == -1){
 				break;
 			}
-            string hash_key = Crowd.get_in_crowd(index);
-
+            string hash_key = Crowd.get_in_crowd(index, username);
+			System.Console.WriteLine("\nYour hash key = {0:s}", hash_key);
 			break;
 		case 2:
-			Crowd.create();
+			if (guest){
+				System.Console.WriteLine("\nOnly registered user can create the crowd\n");
+				break;
+			}
+			string admin_hash_key = Crowd.create(username);
+			System.Console.WriteLine("\nYour admin hash key = {0:s}", admin_hash_key);
 			break;
 		case 3:
+			List<string[]> admin_crowds = Crowd.crowds();
+			if (admin_crowds.Count <= 0){
+				System.Console.WriteLine("\n There are no avaliable crows, create if first\n");
+				break;
+			}
+			System.Console.WriteLine("	name		location    length of crowd");
+			for (int i = 0; i < admin_crowds.Count; ++i){
+				Console.WriteLine(i + ". " + "|{0,15:s}|{1,15:s}| {2,16:s}|", admin_crowds[i][0], admin_crowds[i][1], admin_crowds[i][2]);
+			}
+			int admin_index = Crowd.choose_the_crowd(admin_crowds.Count - 1);
+			if (admin_index == -1){
+				break;
+			}
+
+			System.Console.WriteLine("Enter the hash key of the {0:s} crowd", admin_crowds[admin_index][0]);
+			string a_hash_key = Console.ReadLine();
+			if (!Crowd.is_admin_hash_key(admin_index, a_hash_key)){
+				System.Console.WriteLine("\nThe hash key isn't admin\n");
+				break;
+			}
+			Crowd.admin_panel(admin_crowds[admin_index], admin_index);
+			break;
+		case 4:
 			System.Environment.Exit(0);
 			break;
 		default:
