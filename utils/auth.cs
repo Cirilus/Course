@@ -3,31 +3,42 @@ using System.IO;
 
 namespace utils{
     public class Auth{
+        // each field divided by ';'
+        // the structure of file: 
+        // usernmae; password;
         static string file_path = "auth.txt";
-
+        // return the user id by its username
         public static int get_user_id(string username){
             int index = 0;
             if (username == "guest"){
                 return -2;
             }
-            using (StreamReader reader = new StreamReader(file_path)){
-                while (!reader.EndOfStream){
-                    string[] line = reader.ReadLine().Split(";");                    
-                    if (line[0] == username){
-                        return index;
+            try{
+                using (StreamReader reader = new StreamReader(file_path)){
+                    while (!reader.EndOfStream){
+                        string[] line = reader.ReadLine().Split(";");                    
+                        if (line[0] == username){
+                            return index;
+                        }
+                        index += 1;
                     }
-                    index += 1;
-                }
-            }       
+                }       
+            } catch (FileNotFoundException){
+                return -1;
+            }
+            
             return -1;
         }
 
+        // return the username by it id
         public static string get_username(int index){
             string username = File.ReadAllLines(file_path)[index].Split(";")[0];
 
             return username;
         }
 
+
+        // shows the regestration panel
         public static string registration(){
             while (true){
                 try{
@@ -66,8 +77,10 @@ namespace utils{
 
                     
                     using (StreamWriter writer = new StreamWriter(file_path, true)){
-                            writer.WriteLine(username + ";" + password + ";");
+                        writer.WriteLine(username + ";" + password + ";");
                     }
+                    
+                    
                     
                     return username;
                 }
@@ -76,7 +89,7 @@ namespace utils{
                 }
             }
         }
-
+        // shows the login panel
         public static string login(){
             while (true){
                 try{
@@ -105,17 +118,20 @@ namespace utils{
                         Console.WriteLine("The sumbol ';' doesn't allow, pleasse try again");
                         continue;
                     }
+                    try{
+                        using (StreamReader reader = new StreamReader(file_path)){
+                            while (!reader.EndOfStream){
+                                string[] line = reader.ReadLine().Split(";");
+                                string u = line[0];
+                                string p = line[1];
+                                if (u == username && p == password){
+                                    return username;
+                                }
 
-                    using (StreamReader reader = new StreamReader(file_path)){
-                        while (!reader.EndOfStream){
-                            string[] line = reader.ReadLine().Split(";");
-                            string u = line[0];
-                            string p = line[1];
-                            if (u == username && p == password){
-                                return username;
                             }
-
                         }
+                    }catch (FileNotFoundException){
+                        return "";
                     }
 
                     return "";

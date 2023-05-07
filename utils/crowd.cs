@@ -3,8 +3,16 @@ using System.Diagnostics;
 
 namespace utils{
     public class Crowd{
+        // each field divided by ';'
+        // the structure of file: 
+        // name of the crowd; location of the crowd; length of the crowd; the hash keys that in the crowd. Its divided by ',' and the first key automatically considered admin.
         static string file_path = "crowd.txt";
+        // each field divided by ';'
+        // the structure of file: 
+        // usernmae; password;
         static string user_path = "auth.txt";
+
+        // create the crowd and set its info to the file.
         public static string create(string username){
             while (true){
                 Console.Write("Enter the name of crowd: ");
@@ -43,6 +51,8 @@ namespace utils{
             
         }
 
+
+        // increase the length of the crowd and add the hash key
         public static void replace_line(int index, string hash_key){
             string[] lines = File.ReadAllLines(file_path);
             string[] newline = lines[index].Split(";");
@@ -52,13 +62,13 @@ namespace utils{
             File.WriteAllLines(file_path, lines);
         }
         
-
+        // return all hash keys of the crowd
         public static string[] get_hash_keys(int index){
             string[] file = File.ReadAllLines(file_path);
             string[] hash_keys = file[index].Split(";")[3].Split(",");
             return hash_keys;
         }
-
+        // check if the hash key is admin
         public static bool is_admin_hash_key(int crowd_index, string hash_key){
 
             string admin_hash_key = get_hash_keys(crowd_index)[0];
@@ -70,14 +80,15 @@ namespace utils{
             return false;
         }
 
-
+        // shows the admin panel of the crowds
         public static void admin_panel(string[] crowd, int index){
 
             while (true){
                 
                 System.Console.WriteLine("\n1 - show hash keys\n2 - delete the project\n3 - exit");
 	            System.Console.Write("your choice: ");
-	            int choice = Utils.saveEnter();
+                int choice = 0;
+                Utils.saveEnter(ref choice);
 
                 System.Console.WriteLine("	name		location    length of crowd");
                 Console.WriteLine("|{0,15:s}|{1,15:s}| {2,16:s}|", crowd[0], crowd[1], crowd[2]);
@@ -111,47 +122,46 @@ namespace utils{
 
         }
 
+        // return the crowd id by name
         public static int crowd_id(string crowd_name){
             int index = 0;
-            using (StreamReader reader = new StreamReader(file_path)){
-                while (!reader.EndOfStream){
-                    string[] line = reader.ReadLine().Split(";");                    
-                    if (line[0] == crowd_name){
-                        return index;
+            try{
+                using (StreamReader reader = new StreamReader(file_path)){
+                    while (!reader.EndOfStream){
+                        string[] line = reader.ReadLine().Split(";");                    
+                        if (line[0] == crowd_name){
+                            return index;
+                        }
+                        index += 1;
                     }
-                    index += 1;
                 }
+            } catch (FileNotFoundException){
+                return -1;
             }
+            
             return -1;
         }
 
+        // return the crowd name by id
         public static string crowd_name(int index){
             string name = File.ReadAllLines(file_path)[index].Split(";")[0];
             return name;
         }
 
-
-        public static void add_hash_key(string hash_key, string crowd_name = "", int index = -1){
-            if (index == -1){
-                index = crowd_id(crowd_name);
-            }
-            string[] crowd_file = File.ReadAllLines(file_path);
-            crowd_file[index] += hash_key + ",";
-            File.WriteAllLines(user_path, crowd_file);
-        }
-
+        // add user to the crowd 
         public static string get_in_crowd(int crowd, string username){
             string hash_key = Guid.NewGuid().ToString();
             replace_line(crowd, hash_key);
             return hash_key;
         }
 
+        // return the crowd index that user has choosen
         public static int choose_the_crowd(int max_index){
-            int index;
+            int index = 0;
 
             while (true){
                 System.Console.WriteLine("\nEnter the index of crowd that you want to get in, if you want to get back enter the q");
-                index = Utils.saveEnter();
+                Utils.saveEnter(ref index);
                 if (index > max_index || index < -1){
                     System.Console.WriteLine("\nThe invalid index, try please again\n");
                     continue;
@@ -161,7 +171,7 @@ namespace utils{
             return index;
         }
 
-
+        // return the all crowds
         public static List<string[]> crowds(){
             List<string[]> crowds = new List<string[]>();
             try{
@@ -177,10 +187,6 @@ namespace utils{
             
             return crowds;
         }
-
-        // public static List<string[]> show_my_crowds(string username){
-            
-        // }
 
     }
 

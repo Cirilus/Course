@@ -2,15 +2,22 @@
 
 
 
-int choice;
+int choice = -1;
+// if the user authorized in system
 bool auth = false;
+// if the user guest that logged without username and password. Guest cannot to create the crowd
 bool guest = false;
 string username = "guest";
 
 while (true){
 	System.Console.WriteLine("1 - registration \n2 - login \n3 - login without password and username \n4 - exit");
 	System.Console.Write("your choice:");
-	choice = Utils.saveEnter();
+	Utils.saveEnter(ref choice);
+	// the Authorisation panel that conatins:
+	// the registration panel
+	// the login panel
+	// the login as a guest
+	// exit from application
 	switch (choice){
 		case 1:
 			username = Auth.registration();
@@ -45,13 +52,19 @@ while (true){
 
 System.Console.WriteLine("\n");
 
-while (true){
+do{
 	System.Console.WriteLine("\n1 - list of all crowds\n2 - create the crowd\n3 - go to the admin panel of crowd\n4 - exit");
 	System.Console.Write("your choice " + username + " :");
-	choice = Utils.saveEnter();
+	Utils.saveEnter(ref choice);
 	if (choice == -1){
 		continue;
 	}
+
+	// the crowd panel that contains:
+	// the list of the all allowed crowds and in this panel you also can enter one of these crowd.
+	// creating the new crowd
+	// enter to the admin panel of the crowd
+	// exit from application
 	switch (choice){
 		case 1:
 			List<string[]> crowds = Crowd.crowds();
@@ -108,7 +121,7 @@ while (true){
 			System.Console.WriteLine("\nUnexpected choice, try please again\n");
 			break;
 	}
-}
+}while (true);
 
 
 
