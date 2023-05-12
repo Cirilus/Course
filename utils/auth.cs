@@ -7,7 +7,16 @@ namespace utils{
         // the structure of file: 
         // usernmae; password;
         static string file_path = "auth.txt";
-        // return the user id by its username
+
+
+        /// <summary>
+        /// Retrieves the user ID based on the provided username.
+        /// </summary>
+        /// <param name="username">The username for which to find the user ID.</param>
+        /// <returns>
+        /// Returns the user ID as an integer if the username is found. Returns -2 if the username is "guest".
+        /// Returns -1 if the username is not found or if a FileNotFoundException occurs.
+        /// </returns>
         public static int get_user_id(string username){
             int index = 0;
             if (username == "guest"){
@@ -30,7 +39,11 @@ namespace utils{
             return -1;
         }
 
-        // return the username by it id
+        /// <summary>
+        /// Retrieves the username based on the provided index.
+        /// </summary>
+        /// <param name="index">The index of the username in the file.</param>
+        /// <returns>Returns the username as a string.</returns>
         public static string get_username(int index){
             string username = File.ReadAllLines(file_path)[index].Split(";")[0];
 
@@ -38,7 +51,10 @@ namespace utils{
         }
 
 
-        // shows the regestration panel
+        /// <summary>
+        /// Handles the user registration process.
+        /// </summary>
+        /// <returns>Returns the registered username as a string.</returns>
         public static string registration(){
             while (true){
                 try{
@@ -80,16 +96,20 @@ namespace utils{
                         writer.WriteLine(username + ";" + password + ";");
                     }
                     
-                    
-                    
                     return username;
                 }
                 catch {
                     Console.WriteLine("Something going wrong, try please again");
+                    continue;
                 }
             }
         }
-        // shows the login panel
+
+
+        /// <summary>
+        /// Handles the user login process.
+        /// </summary>
+        /// <returns>Returns the logged-in username as a string if successful, or an empty string if unsuccessful.</returns>
         public static string login(){
             while (true){
                 try{
@@ -138,6 +158,7 @@ namespace utils{
                 }
                 catch (Exception e) {
                     Console.WriteLine("Something going wrong, try please again" + e);
+                    continue;
                 }
         }
     }
